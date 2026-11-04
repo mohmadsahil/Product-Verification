@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 180 15% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 15% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 15% 13%;
+
+    --primary: 180 100% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 180 25% 95%;
+    --secondary-foreground: 180 60% 18%;
+
+    --muted: 180 15% 96%;
+    --muted-foreground: 180 10% 40%;
+
+    --accent: 180 30% 92%;
+    --accent-foreground: 180 60% 18%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 180 25% 85%;
+    --input: 180 25% 85%;
+    --ring: 180 100% 25%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  html,
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-feature-settings: "cv11", "ss01", "ss03";
+  }
+}
+
+@layer utilities {
+  .bg-dots {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(0, 128, 128, 0.08) 1px,
+      transparent 0
+    );
+    background-size: 24px 24px;
+  }
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      #006666 0%,
+      #4CA3A3 50%,
+      #006666 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+/* Themed scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #008080 #e6f2f2;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #e6f2f2;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #4CA3A3 0%, #008080 100%);
+  border: 2px solid #e6f2f2;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #008080 0%, #006666 100%);
+}
+*::-webkit-scrollbar-corner {
+  background: #e6f2f2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
