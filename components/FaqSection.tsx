@@ -12,23 +12,11 @@ export const FAQS: { q: string; a: string }[] = [
   },
   {
     q: `Is my Crystal Glow cream original or fake?`,
-    a: `If your Crystal Glow cream verifies successfully on this page you have a genuine Crystal Glow original cream. Anything that fails the verification, has blurry packaging, missing batch number or a broken QR is very likely a duplicate or fake Crystal Glow product.`,
-  },
-  {
-    q: `How to identify a fake ${BRAND_NAME} product without scanning?`,
-    a: `Original ${BRAND_NAME} products ship with a sharp Crystal Glow logo, intact tamper seal, correct batch number, clear manufacturing and expiry date, a printed Crystal Glow barcode and a working verification QR. Any smudging, missing QR, mismatched packaging, incorrect price or off smell is a red flag for a fake Crystal Glow cream or counterfeit skincare.`,
+    a: `If your Crystal Glow cream verifies successfully on this page you have a genuine Crystal Glow original cream. Anything that fails the verification, or a broken or missing QR is very likely a duplicate or fake Crystal Glow product.`,
   },
   {
     q: `How does Crystal Glow QR code verification work?`,
-    a: `Every genuine Crystal Glow pack carries a unique Crystal Glow QR code. Scanning it opens this official Crystal Glow product verification page, where our system cross-checks the code with the Crystal Glow batch number verification database and shows whether the product is authentic.`,
-  },
-  {
-    q: `Where can I buy genuine ${BRAND_NAME} products?`,
-    a: `Buy original Crystal Glow products online only from the Crystal Glow official website or an authorized Crystal Glow seller. The Crystal Glow original cream price and the authentic skincare range are listed there. Avoid unknown third-party sellers who often ship duplicate or fake Crystal Glow products.`,
-  },
-  {
-    q: `What should I do if I received a duplicate or fake Crystal Glow product?`,
-    a: `Stop using the product, keep the pack and receipt, and share the photos with our support team via WhatsApp or email. We will raise a Crystal Glow fake product complaint, help with refund or replacement, and report the unauthorized seller so no one else gets a duplicate Crystal Glow cream.`,
+    a: `Every genuine Crystal Glow product carries a unique Crystal Glow QR code. Scanning it opens this official Crystal Glow product verification page, where our system cross-checks the code with the Crystal Glow batch number verification database and shows whether the product is authentic.`,
   },
   {
     q: `Is my mobile number safe when I verify online?`,

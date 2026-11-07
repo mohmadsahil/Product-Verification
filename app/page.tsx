@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import VerifyForm from "@/components/VerifyForm";
+import QrScanner from "@/components/QrScanner";
 import FaqSection from "@/components/FaqSection";
 import {
   BreadcrumbLd,
@@ -38,15 +37,7 @@ export default function Home() {
         />
 
         <section className="px-3 sm:px-4 pt-4 sm:pt-6 pb-12 sm:pb-16">
-          <Suspense
-            fallback={
-              <div className="text-center py-10 text-muted-foreground">
-                Loading…
-              </div>
-            }
-          >
-            <VerifyForm />
-          </Suspense>
+          <QrScanner />
         </section>
 
         <div className="relative bg-white">
@@ -109,7 +100,7 @@ export default function Home() {
             </p>
           </section>
 
-          <section className="max-w-3xl mx-auto px-3 sm:px-4 mt-6 sm:mt-14">
+          {/* <section className="max-w-3xl mx-auto px-3 sm:px-4 mt-6 sm:mt-14">
             <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4">
               <span className="h-5 sm:h-8 w-1 sm:w-1.5 rounded-full bg-brand-sheen" />
               <h2 className="text-base sm:text-2xl md:text-3xl font-semibold text-brand tracking-tight">
@@ -131,7 +122,7 @@ export default function Home() {
               price is the most common sign of a duplicate {BRAND_NAME}{" "}
               product.
             </p>
-          </section>
+          </section> */}
 
           <FaqSection />
 
