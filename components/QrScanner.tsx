@@ -7,9 +7,12 @@ import { Camera, CameraOff, QrCode, ShieldCheck, ShieldAlert } from "lucide-reac
 import BrandLogo from "./BrandLogo";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-import { SITE_URL } from "@/lib/brand";
-
-const EXPECTED_VERIFY_URL = `${SITE_URL.replace(/\/$/, "")}/verify`;
+const ALLOWED_QR_ORIGINS = [
+  "https://verify-crystalglow.netlify.app",
+  "https://verify-crystalglow.in",
+  "https://verify.crystalglow.in",
+];
+const EXPECTED_PATH = "/verify";
 
 type CamState = "idle" | "requesting" | "active" | "denied" | "unsupported";
 
@@ -32,29 +35,26 @@ export default function QrScanner() {
   function routeFromScan(raw: string) {
     if (handledRef.current) return;
 
-    let expected: URL | null = null;
     let scanned: URL | null = null;
     try {
-      expected = new URL(EXPECTED_VERIFY_URL);
       scanned = new URL(raw);
     } catch {
       setErr("Invalid QR code. Please scan a valid Crystal Glow QR.");
       return;
     }
 
-    const sameOrigin = scanned.origin === expected.origin;
-    const samePath =
-      scanned.pathname.replace(/\/$/, "") ===
-      expected.pathname.replace(/\/$/, "");
+    const originAllowed = ALLOWED_QR_ORIGINS.includes(scanned.origin);
+    const pathOk =
+      scanned.pathname.replace(/\/$/, "") === EXPECTED_PATH;
 
-    if (!sameOrigin || !samePath) {
+    if (!originAllowed || !pathOk) {
       setErr("Invalid QR code. Please scan a valid Crystal Glow QR.");
       return;
     }
 
     handledRef.current = true;
     setErr(null);
-    router.push(`/verify${scanned.search}`);
+    router.push(`${EXPECTED_PATH}${scanned.search}`);
   }
 
   function onDetect(codes: IDetectedBarcode[]) {
