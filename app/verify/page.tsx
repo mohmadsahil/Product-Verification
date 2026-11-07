@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import VerifyForm from "@/components/VerifyForm";
+import DetailsSkeleton from "@/components/DetailsSkeleton";
 import FaqSection from "@/components/FaqSection";
 import {
   BreadcrumbLd,
@@ -38,13 +39,7 @@ export default function VerifyPage() {
         />
 
         <section className="px-3 sm:px-4 pt-4 sm:pt-6 pb-12 sm:pb-16">
-          <Suspense
-            fallback={
-              <div className="text-center py-10 text-muted-foreground">
-                Loading…
-              </div>
-            }
-          >
+          <Suspense fallback={<DetailsSkeleton />}>
             <VerifyForm />
           </Suspense>
         </section>
