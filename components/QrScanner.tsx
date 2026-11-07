@@ -3,10 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
-import { Camera, CameraOff, Edit3, QrCode, ShieldCheck } from "lucide-react";
+import { Camera, CameraOff, QrCode, ShieldCheck, ShieldAlert } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import { SITE_URL } from "@/lib/brand";
+
+const EXPECTED_VERIFY_URL = `${SITE_URL.replace(/\/$/, "")}/verify`;
 
 type CamState = "idle" | "requesting" | "active" | "denied" | "unsupported";
 
@@ -28,24 +31,30 @@ export default function QrScanner() {
 
   function routeFromScan(raw: string) {
     if (handledRef.current) return;
-    handledRef.current = true;
 
-    let path = "/verify";
+    let expected: URL | null = null;
+    let scanned: URL | null = null;
     try {
-      const u = new URL(raw);
-      const originHere =
-        typeof window !== "undefined" ? window.location.origin : "";
-      if (originHere && u.origin === originHere) {
-        path = `${u.pathname}${u.search}`;
-        if (!path.startsWith("/verify")) path = `/verify${u.search}`;
-      } else {
-        path = `/verify${u.search}`;
-      }
+      expected = new URL(EXPECTED_VERIFY_URL);
+      scanned = new URL(raw);
     } catch {
-      const idMatch = raw.match(/[a-f0-9]{24}/i);
-      if (idMatch) path = `/verify?id=${idMatch[0]}`;
+      setErr("Invalid QR code. Please scan a valid Crystal Glow QR.");
+      return;
     }
-    router.push(path);
+
+    const sameOrigin = scanned.origin === expected.origin;
+    const samePath =
+      scanned.pathname.replace(/\/$/, "") ===
+      expected.pathname.replace(/\/$/, "");
+
+    if (!sameOrigin || !samePath) {
+      setErr("Invalid QR code. Please scan a valid Crystal Glow QR.");
+      return;
+    }
+
+    handledRef.current = true;
+    setErr(null);
+    router.push(`/verify${scanned.search}`);
   }
 
   function onDetect(codes: IDetectedBarcode[]) {
@@ -195,9 +204,13 @@ export default function QrScanner() {
           )}
 
           {err && camState === "active" && (
-            <p className="text-sm text-destructive text-center mt-3" aria-live="assertive">
-              {err}
-            </p>
+            <div
+              className="mt-3 flex items-center justify-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
+              aria-live="assertive"
+            >
+              <ShieldAlert className="h-4 w-4 shrink-0" aria-hidden />
+              <span>{err}</span>
+            </div>
           )}
         </CardContent>
       </Card>
