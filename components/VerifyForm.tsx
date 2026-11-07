@@ -53,7 +53,7 @@ export default function VerifyForm() {
   useEffect(() => {
     if (!urlId || recordId) return;
     if (!/^[a-f0-9]{24}$/i.test(urlId)) {
-      router.replace("/", { scroll: false });
+      router.replace("/verify", { scroll: false });
       return;
     }
     let cancelled = false;
@@ -64,7 +64,7 @@ export default function VerifyForm() {
         const json = await res.json();
         if (cancelled) return;
         if (!res.ok || !json.ok) {
-          router.replace("/", { scroll: false });
+          router.replace("/verify", { scroll: false });
           return;
         }
         setRecordId(urlId);
@@ -82,7 +82,7 @@ export default function VerifyForm() {
           setStage("product");
         }
       } catch {
-        if (!cancelled) router.replace("/", { scroll: false });
+        if (!cancelled) router.replace("/verify", { scroll: false });
       } finally {
         if (!cancelled) setHydrating(false);
       }
@@ -123,7 +123,7 @@ export default function VerifyForm() {
       }
       setRecordId(json.id);
       setStage("product");
-      router.replace(`/?id=${json.id}`, { scroll: false });
+      router.replace(`/verify?id=${json.id}`, { scroll: false });
       if (typeof window !== "undefined") {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
@@ -166,7 +166,7 @@ export default function VerifyForm() {
         verifiedAt: new Date().toISOString(),
       });
       setStage("result");
-      router.replace(`/?id=${recordId}&verified=true`, { scroll: false });
+      router.replace(`/verify?id=${recordId}&verified=true`, { scroll: false });
       if (typeof window !== "undefined") {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
@@ -495,7 +495,7 @@ export default function VerifyForm() {
                         setStage("details");
                         setRecordId(null);
                         setProduct("");
-                        router.replace("/", { scroll: false });
+                        router.replace("/verify", { scroll: false });
                         if (typeof window !== "undefined") {
                           window.scrollTo({ top: 0, behavior: "smooth" });
                         }
@@ -548,7 +548,7 @@ export default function VerifyForm() {
                 setErr(null);
                 setFromHydration(false);
                 setStage("details");
-                router.replace("/", { scroll: false });
+                router.replace("/verify", { scroll: false });
                 if (typeof window !== "undefined") {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }
