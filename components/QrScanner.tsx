@@ -35,26 +35,26 @@ export default function QrScanner() {
   function routeFromScan(raw: string) {
     if (handledRef.current) return;
 
-    let scanned: URL | null = null;
-    try {
-      scanned = new URL(raw);
-    } catch {
+    const trimmed = raw.trim();
+    const matched = ALLOWED_QR_ORIGINS.some((origin) =>
+      trimmed.startsWith(origin)
+    );
+
+    if (!matched) {
       setErr("Invalid QR code. Please scan a valid Crystal Glow QR.");
       return;
     }
 
-    const originAllowed = ALLOWED_QR_ORIGINS.includes(scanned.origin);
-    const pathOk =
-      scanned.pathname.replace(/\/$/, "") === EXPECTED_PATH;
-
-    if (!originAllowed || !pathOk) {
-      setErr("Invalid QR code. Please scan a valid Crystal Glow QR.");
-      return;
+    let search = "";
+    try {
+      search = new URL(trimmed).search;
+    } catch {
+      /* ignore — route without query */
     }
 
     handledRef.current = true;
     setErr(null);
-    router.push(`${EXPECTED_PATH}${scanned.search}`);
+    router.push(`${EXPECTED_PATH}${search}`);
   }
 
   function onDetect(codes: IDetectedBarcode[]) {
